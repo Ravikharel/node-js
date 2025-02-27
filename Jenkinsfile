@@ -25,11 +25,11 @@ pipeline{
         stage('pushing the image to the docker hub'){ 
             steps{ 
                 script{ 
-                        sh "docker push ${IMAGE_NAME}"
-                    }
+                    sh "docker push ${IMAGE_NAME}"
                 }
             }
         }
+    }
 
     post{
         success{ 
