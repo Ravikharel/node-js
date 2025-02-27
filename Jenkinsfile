@@ -1,14 +1,15 @@
 pipeline{
     agent any 
     environment{
-        IMAGE_NAME="ravikharel/node-js"
+        IMAGE_NAME="harbor.local.registry/node-js-1/webapp:v1"
         CONTAINER_NAME="new-container"
+        
     } 
     stages{ 
         stage('building the image') { 
             steps{ 
                 script{ 
-                    sh "docker build -t ${IMAGE_NAME}:v1 ."
+                    sh "docker build -t ${IMAGE_NAME} ."
                     sh "docker images"
                 }
             }
@@ -16,7 +17,7 @@ pipeline{
         stage('building the container'){ 
             steps{ 
                 script{ 
-                    sh " docker container run -d -p 3000:3000 --name ${CONTAINER_NAME} ${IMAGE_NAME}:v1"
+                    sh " docker container run -d -p 3000:3000 --name ${CONTAINER_NAME} ${IMAGE_NAME}"
                     sh "docker container ps -a"
                 }
             }
@@ -24,14 +25,12 @@ pipeline{
         stage('pushing the image to the docker hub'){ 
             steps{ 
                 script{ 
-                    withDockerRegistry([credentialsId:'dockerhub-credentials']){
-                        sh "docker push ${IMAGE_NAME}:v1"
+                        sh "docker push ${IMAGE_NAME}"
                     }
                 }
             }
         }
 
-    }
     post{
         success{ 
             echo "Sucess!!"
@@ -40,4 +39,4 @@ pipeline{
             echo "failed!"
         }
     }
-} 
+}
