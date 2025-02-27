@@ -25,6 +25,7 @@ pipeline{
         stage('pushing the image to the docker hub'){ 
             steps{ 
                 script{ 
+                    sh "docker login harbor.registry.local -u admin -p Harbor12345"
                     sh "docker push ${IMAGE_NAME}"
                 }
             }
