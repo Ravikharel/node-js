@@ -1,7 +1,7 @@
 pipeline{
     agent any 
     environment{
-        IMAGE_NAME="harbor.local.registry/node-js-1/webapp:v1"
+        IMAGE_NAME="harbor.registry.local/node-js-1/webapp:v1"
         CONTAINER_NAME="new-container"
         
     } 
